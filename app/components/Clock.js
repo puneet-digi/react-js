@@ -43,13 +43,13 @@ export class Clock extends React.Component {
       var timeStamp = Math.round(elapsed/msPerHour ) + ' hours ago';   
     }
     else if (elapsed < msPerMonth) {
-      var timeStamp = 'approximately ' + Math.round(elapsed/msPerDay) + ' days ago';   
+      var timeStamp = Math.round(elapsed/msPerDay) + ' days ago';   
     }    
     else if (elapsed < msPerYear) {
-      var timeStamp = 'approximately ' + Math.round(elapsed/msPerMonth) + ' months ago';   
+      var timeStamp = Math.round(elapsed/msPerMonth) + ' months ago';   
     }    
     else {
-      var timeStamp = 'approximately ' + Math.round(elapsed/msPerYear ) + ' years ago';   
+      var timeStamp = Math.round(elapsed/msPerYear ) + ' years ago';   
     }
     this.setState({stamp: timeStamp});
   }
@@ -57,8 +57,7 @@ export class Clock extends React.Component {
   render() {
     return (
       <div>
-        <h3>{this.state.date.toLocaleTimeString()} </h3>
-        <i><p>{this.state.stamp}</p></i>
+        {this.state.date.toLocaleDateString()} <p><i>{this.state.stamp}</i></p>
       </div>
     );
   }
