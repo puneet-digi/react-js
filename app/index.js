@@ -11,30 +11,37 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      active: "Login"
+      isLogin: "",
+      user: ""
     }
-    this.handleClick = this.handleClick.bind(this);
+    this.userLoggedIn = this.userLoggedIn.bind(this);
   }
 
-  handleClick (event){
-    var active = this.state.active;
-    var newActive = active === 'Login' ? 'Welcome' : 'Login';
+  userLoggedIn (userData){
     this.setState({
-      active: newActive
+      isLogin: 'welcome',
+      user: userData
     });
-    {console.log(this.state);}
   }
 
-  render(){    
-    return ( 
-      <div>
+  render(){
+    if(this.state.isLogin === 'welcome') {
+      return (
         <div>
-          {this.state.active === 'Login' ? (<AddBid />) : (<SignupForm />)}
-          <button type="button" onClick={this.handleClick}>Toggle</button>
+          <div>
+            <AddBid userData={this.state.user}/>
+          </div>
         </div>
-      </div>
-    );
+        );
+    } else{
+      return (
+        <div>
+          <div>
+            <SignupForm logIn={this.userLoggedIn}/>
+          </div>
+        </div>
+        );
+    }
   }
 }
-
 render (<App />, window.document.getElementById("app"));

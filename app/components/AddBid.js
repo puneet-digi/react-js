@@ -7,12 +7,9 @@ import {BidList} from "./BidList";
 export class AddBid extends React.Component {
   constructor(props){
   super(props);
-  this.props = {
-  	userId: '1'
-  };
   this.state = {
 	    bid_link:"",		    
-		description:""
+		  description:""
    	};
    this.actionUrlPOST = "http://localhost/reactapi";
    this.handleSubmit = this.handleSubmit.bind(this);
@@ -50,7 +47,7 @@ export class AddBid extends React.Component {
   	return (
   		<div className="container">
 			<div className="justify-content-center">
-	          	<h1>Welcome </h1>
+	          	<h1>Welcome {this.props.userData.firstname}</h1>
 	          	<hr></hr>
         	</div>
     		<form onSubmit={this.handleSubmit} className="form-inline">
@@ -60,7 +57,7 @@ export class AddBid extends React.Component {
 	            </div>
 		        <button type="submit" className="btn btn-primary">Submit</button>
 	     	</form>
-	     	<BidList userId={this.props.userId}/>
+	     	<BidList userId={this.props.userData.id}/>
   		</div>
   		);
   }

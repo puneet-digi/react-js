@@ -9,8 +9,7 @@ export class SignupForm extends React.Component {
     super(props);
 	    this.state = {
   			email:"",
-  			password:"",
-        isLogin: '0'
+  			password:""
     	};
     this.actionUrlPOST = "http://localhost/reactapi";
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,9 +18,8 @@ export class SignupForm extends React.Component {
 
 
   handleSubmit(e){
-	    var self      
-      e.preventDefault()
-      self = this
+	    var self = this
+      e.preventDefault();
       var data = {
         name: this.state.name,
         email: this.state.email,
@@ -38,7 +36,7 @@ export class SignupForm extends React.Component {
         if(data.error==1){
           alert(data.message);
         }else{
-          self.state.isLogin = '1';
+          self.props.logIn(data.data);
         }
       }).fail(function(jqXhr) {
         alert('Login Failed');

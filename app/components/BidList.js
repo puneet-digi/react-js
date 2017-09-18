@@ -47,6 +47,7 @@ export class BidList extends React.Component{
   }
 
   render(){
+    console.log("bid is added");
     return (
       <div className="container">
           <div className="justify-content-center">
