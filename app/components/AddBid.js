@@ -9,7 +9,8 @@ export class AddBid extends React.Component {
   super(props);
   this.state = {
 	    bid_link:"",		    
-		  description:""
+		description:"",
+		lastInsertedId:""
    	};
    this.actionUrlPOST = "http://localhost/reactapi";
    this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,32 +23,30 @@ export class AddBid extends React.Component {
   }
 
   handleSubmit(e){
-	  var self      
-      e.preventDefault()
-      self = this
+      e.preventDefault();
+      var self = this;
       var data = {
         bid_link: this.state.bid_link,
-        description: this.state.description
+        description: this.state.description,
+        user_id: this.props.userData.id
       }
-      // Submit form via jQuery/AJAX
       $.ajax({
         type: 'POST',
         dataType: 'json',       
         url: this.actionUrlPOST + "/add_bid.php",
         data: data,
       }).done(function(data) {
-      	// code for successfull insert goes here
-
-      }).fail(function(jqXhr) {
-        
-      });	  
+      	self.setState({lastInsertedId: data.id});
+      }).fail(function(jqXhr) {});
   }
 
   render(){
   	return (
   		<div className="container">
 			<div className="justify-content-center">
-	          	<h1>Welcome {this.props.userData.firstname}</h1>
+	          	<h1>Welcome {this.props.userData.first_name}
+					<button type="submit" onClick={this.props.logout} className="btn btn-primary pull-right">Logout</button>
+	          	</h1>
 	          	<hr></hr>
         	</div>
     		<form onSubmit={this.handleSubmit} className="form-inline">
@@ -57,7 +56,7 @@ export class AddBid extends React.Component {
 	            </div>
 		        <button type="submit" className="btn btn-primary">Submit</button>
 	     	</form>
-	     	<BidList userId={this.props.userData.id}/>
+	     	<BidList userId={this.props.userData.id} lastInsertedId={this.state.lastInsertedId}/>
   		</div>
   		);
   }

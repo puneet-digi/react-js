@@ -18,7 +18,7 @@ export class SignupForm extends React.Component {
 
 
   handleSubmit(e){
-	    var self = this
+	    var self = this;
       e.preventDefault();
       var data = {
         name: this.state.name,
@@ -33,9 +33,10 @@ export class SignupForm extends React.Component {
         url: this.actionUrlPOST + "/user.php",
         data: data,
       }).done(function(data) {
+        console.log(data);
         if(data.error==1){
           alert(data.message);
-        }else{
+        }else {
           self.props.logIn(data.data);
         }
       }).fail(function(jqXhr) {
