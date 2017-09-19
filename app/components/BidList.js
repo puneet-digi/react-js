@@ -1,32 +1,32 @@
 import React from "react";
 import {render} from "react-dom";
 import $ from 'jquery';
+import {Count} from "./Count";
 
 export class BidList extends React.Component{
 
   constructor(props){
     super(props);
     this.state = {
-      userId: "1",
+      userId: props.userId,
+      lastInsertedId: props.lastInsertedId,
       requestSuccess: '0',
       total_count: '',
-      lastInsertedId: null,
-      dataHtml: null
-
+      dataHtml: null,
+      leadsCount: "",
+      conversionCount: ""
     }
     this.actionUrlPOST = "http://localhost/reactapi";
-    this.handleClick = this.handleClick.bind(this);
+    this.afterInsert = this.afterInsert.bind(this);
   }
 
-  handleClick(event){
+  afterInsert(){
+    this.setState({lastInsertedId: this.props.lastInsertedId});
+    alert("mounted");
+    console.log(this.state);
   }
 
   componentDidMount(){
-    if(this.props.lastInsertedId != null || this.props.lastInsertedId == ""){
-      console.log(this.props);
-      this.setState({lastInsertedId: this.props.lastInsertedId});
-    }
-    console.log(this.state.lastInsertedId);
     var data = {
       user_id: this.state.userId
     }
@@ -39,9 +39,8 @@ export class BidList extends React.Component{
       data: data,
     }).done(function(response) {
       var dataElem = response.data;
-
       var dataHtml = dataElem.map((obj) =>
-        <tr key={obj.id}>
+        <tr key={obj.id}>       
            <td> 
              <div  className=""><a href={obj.bid_link} target="_blank">{obj.bid_link}</a></div>
            </td>
@@ -62,26 +61,29 @@ export class BidList extends React.Component{
            </td>
         </tr>
         );
-      self.setState({dataHtml:dataHtml, requestSuccess: '1', total_count: response.total_count});
+      self.setState({
+        dataHtml:dataHtml, 
+        requestSuccess: '1', 
+        total_count: response.total_count,
+        leadsCount: response.leadsCount,
+        conversionCount: response.conversionCount
+      });
     });
+   
   }
 
   render(){
+    var props = {
+      bidsCount: this.state.total_count,
+      leadsCount: this.state.leadsCount,
+      conversionCount: this.state.conversionCount
+    };
+    console.log(props);
     return (
       <div className="container">
           <div className="justify-content-center">
             <hr></hr>
-            <nav className="navbar navbar-default">
-              <div className="container-fluid">
-                <div className="navbar-header">
-                  <ul className="nav navbar-nav">
-                    <li className="list-group-item justify-content-between"><div>Bids <span className="badge">{this.state.total_count}</span></div></li>
-                    <li className="list-group-item justify-content-between"><div>Leads <span className="badge">{this.state.total_count}</span></div></li>
-                    <li className="list-group-item justify-content-between"><div>Conversions <span className="badge">{this.state.total_count}</span></div></li>
-                  </ul>
-                </div>
-              </div>
-            </nav>
+                <Count {...props}/>
               <hr></hr>
           </div>
           {this.state.requestSuccess === '1' ? <table className="table table-inverse">

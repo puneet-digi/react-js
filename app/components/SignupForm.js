@@ -25,7 +25,7 @@ export class SignupForm extends React.Component {
         email: this.state.email,
         password: this.state.password,
         gender: this.state.gender
-      }
+      };
       // Submit form via jQuery/AJAX
       $.ajax({
         type: 'POST',

@@ -10,6 +10,7 @@ export class AddBid extends React.Component {
   this.state = {
 	    bid_link:"",		    
 		description:"",
+		bid_title: "",
 		lastInsertedId:""
    	};
    this.actionUrlPOST = "http://localhost/reactapi";
@@ -28,6 +29,7 @@ export class AddBid extends React.Component {
       var data = {
         bid_link: this.state.bid_link,
         description: this.state.description,
+        title: this.state.bid_title,
         user_id: this.props.userData.id
       }
       $.ajax({
@@ -37,6 +39,8 @@ export class AddBid extends React.Component {
         data: data,
       }).done(function(data) {
       	self.setState({lastInsertedId: data.id});
+      	self.refs.bidInstance.setState({lastInsertedId: data.id});
+      	console.log(self.refs.bidInstance.afterInsert());
       }).fail(function(jqXhr) {});
   }
 
@@ -50,13 +54,14 @@ export class AddBid extends React.Component {
 	          	<hr></hr>
         	</div>
     		<form onSubmit={this.handleSubmit} className="form-inline">
+    			<input type="text" placeholder="Add Title" className="form-control mb-2 mr-sm-2 mb-sm-0 " value={this.state.bid_title} name="bid_title" onChange={this.handleChange} />
 	            <input type="text" placeholder="Add New Link" className="form-control mb-2 mr-sm-2 mb-sm-0 " value={this.state.bid_link} name="bid_link" onChange={this.handleChange} />
 				<div className="input-group mb-2 mr-sm-2 mb-sm-0">	            
 	            	<input type="text" placeholder="Add Description" className="form-control" value={this.state.description} name="description" onChange={this.handleChange} />
 	            </div>
 		        <button type="submit" className="btn btn-primary">Submit</button>
 	     	</form>
-	     	<BidList userId={this.props.userData.id} lastInsertedId={this.state.lastInsertedId}/>
+	     	<BidList userId={this.props.userData.id} lastInsertedId={this.state.lastInsertedId} ref="bidInstance"/>
   		</div>
   		);
   }
