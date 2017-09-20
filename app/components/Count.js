@@ -2,6 +2,7 @@ import React from "react";
 import { render } from "react-dom";
 import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios'
 import $ from 'jquery';
+import {Stats} from "./Stats";
 
 
 export class Count extends React.Component{
@@ -9,13 +10,15 @@ export class Count extends React.Component{
 		super(props);
 	}
 
-	componentDidMount(event){
-		var props = this.props;
-		this.setState({props});
-	}
-
 	render(){
-		var props = this.props;
+		var props = {
+			bid_to_lead:this.props.bid_to_lead,
+			lead_to_conversion: this.props.lead_to_conversion,
+			bid_to_conversion: this.props.bid_to_conversion,
+		    bid_to_lead_percentage: this.props.bid_to_lead_percentage,
+	        lead_to_conversion_percentage: this.props.lead_to_conversion_percentage,
+	        bid_to_conversion_percentage: this.props.bid_to_conversion_percentage
+		};
 		return (
 			<div>
 	            <nav className="navbar navbar-default">
@@ -29,6 +32,7 @@ export class Count extends React.Component{
 	                </div>
 	              </div>
 	              <div className="navbar navbar-default">
+	              	<Stats {...props}/>
 	              </div>
 	            </nav>
 			</div>

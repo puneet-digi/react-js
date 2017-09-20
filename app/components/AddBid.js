@@ -13,7 +13,7 @@ export class AddBid extends React.Component {
 		bid_title: "",
 		lastInsertedId:""
    	};
-   this.actionUrlPOST = "http://localhost/reactapi";
+   this.actionUrlPOST = process.env.API_URL;
    this.handleSubmit = this.handleSubmit.bind(this);
    this.handleChange = this.handleChange.bind(this);
   }
@@ -38,17 +38,22 @@ export class AddBid extends React.Component {
         url: this.actionUrlPOST + "/add_bid.php",
         data: data,
       }).done(function(data) {
+      	self.setState({
+	        bid_link: "",
+	        description: "",
+	        bid_title: ""
+      	});
       	self.setState({lastInsertedId: data.id});
       	self.refs.bidInstance.setState({lastInsertedId: data.id});
-      	console.log(self.refs.bidInstance.afterInsert());
-      }).fail(function(jqXhr) {});
+      	alert("Bid added Successfully");
+      });
   }
 
   render(){
   	return (
   		<div className="container">
 			<div className="justify-content-center">
-	          	<h1>Welcome {this.props.userData.first_name}
+	          	<h1 className="text-capitalize">Welcome {this.props.userData.first_name},
 					<button type="submit" onClick={this.props.logout} className="btn btn-primary pull-right">Logout</button>
 	          	</h1>
 	          	<hr></hr>

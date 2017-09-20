@@ -14,16 +14,15 @@ export class BidList extends React.Component{
       total_count: '',
       dataHtml: null,
       leadsCount: "",
+      ratios: {},
       conversionCount: ""
     }
-    this.actionUrlPOST = "http://localhost/reactapi";
+    this.actionUrlPOST = process.env.API_URL;
     this.afterInsert = this.afterInsert.bind(this);
   }
 
   afterInsert(){
-    this.setState({lastInsertedId: this.props.lastInsertedId});
-    alert("mounted");
-    console.log(this.state);
+    this.setState({lastInsertedId: this.props.lastInsertedId}); 
   }
 
   componentDidMount(){
@@ -39,6 +38,7 @@ export class BidList extends React.Component{
       data: data,
     }).done(function(response) {
       var dataElem = response.data;
+      self.setState({ratios: response.ratios});
       var dataHtml = dataElem.map((obj) =>
         <tr key={obj.id}>       
            <td> 
@@ -76,9 +76,14 @@ export class BidList extends React.Component{
     var props = {
       bidsCount: this.state.total_count,
       leadsCount: this.state.leadsCount,
-      conversionCount: this.state.conversionCount
+      conversionCount: this.state.conversionCount,
+      bid_to_lead: this.state.ratios.bid_to_lead,
+      lead_to_conversion: this.state.ratios.lead_to_conversion,
+      bid_to_conversion: this.state.ratios.bid_to_conversion,
+      bid_to_lead_percentage: this.state.ratios.bid_to_lead_percentage,
+      lead_to_conversion_percentage: this.state.ratios.lead_to_conversion_percentage,
+      bid_to_conversion_percentage: this.state.ratios.bid_to_conversion_percentage
     };
-    console.log(props);
     return (
       <div className="container">
           <div className="justify-content-center">

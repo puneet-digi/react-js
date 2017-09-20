@@ -11,7 +11,7 @@ export class SignupForm extends React.Component {
   			email:"",
   			password:""
     	};
-    this.actionUrlPOST = "http://localhost/reactapi";
+    this.actionUrlPOST = process.env.API_URL;
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -33,15 +33,12 @@ export class SignupForm extends React.Component {
         url: this.actionUrlPOST + "/user.php",
         data: data,
       }).done(function(data) {
-        console.log(data);
         if(data.error==1){
           alert(data.message);
         }else {
           self.props.logIn(data.data);
         }
-      }).fail(function(jqXhr) {
-        alert('Login Failed');
-      });	  
+      })	  
   }
 
   handleChange(event){
