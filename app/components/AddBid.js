@@ -5,18 +5,22 @@ import $ from 'jquery';
 import {BidList} from "./BidList";
 
 export class AddBid extends React.Component {
+
   constructor(props){
   super(props);
   this.state = {
 	    bid_link:"",		    
-		description:"",
-		bid_title: "",
-		lastInsertedId:""
+		  description:"",
+		  bid_title: "",
+      userData: props.userData,
+      lastInsertedId: null,
+      bid: []
    	};
    this.actionUrlPOST = process.env.API_URL;
    this.handleSubmit = this.handleSubmit.bind(this);
    this.handleChange = this.handleChange.bind(this);
   }
+
 
   handleChange(event) {
   	var inputName = event.target.name;
@@ -45,28 +49,27 @@ export class AddBid extends React.Component {
       	});
       	self.setState({lastInsertedId: data.id});
       	self.refs.bidInstance.setState({lastInsertedId: data.id});
-      	alert("Bid added Successfully");
       });
   }
 
   render(){
   	return (
   		<div className="container">
-			<div className="justify-content-center">
-	          	<h1 className="text-capitalize">Welcome {this.props.userData.first_name},
-					<button type="submit" onClick={this.props.logout} className="btn btn-primary pull-right">Logout</button>
-	          	</h1>
-	          	<hr></hr>
-        	</div>
+			  <div className="justify-content-center">
+	        <h1 className="text-capitalize">Welcome {this.props.userData.first_name},
+					  <button type="submit" onClick={this.props.logout} className="btn btn-primary pull-right">Logout</button>
+	        </h1>
+	        <hr></hr>
+        </div>
     		<form onSubmit={this.handleSubmit} className="form-inline">
     			<input type="text" placeholder="Add Title" className="form-control mb-2 mr-sm-2 mb-sm-0 " value={this.state.bid_title} name="bid_title" onChange={this.handleChange} />
-	            <input type="text" placeholder="Add New Link" className="form-control mb-2 mr-sm-2 mb-sm-0 " value={this.state.bid_link} name="bid_link" onChange={this.handleChange} />
-				<div className="input-group mb-2 mr-sm-2 mb-sm-0">	            
-	            	<input type="text" placeholder="Add Description" className="form-control" value={this.state.description} name="description" onChange={this.handleChange} />
-	            </div>
-		        <button type="submit" className="btn btn-primary">Submit</button>
+	        <input type="text" placeholder="Add New Link" className="form-control mb-2 mr-sm-2 mb-sm-0 " value={this.state.bid_link} name="bid_link" onChange={this.handleChange} />
+				  <div className="input-group mb-2 mr-sm-2 mb-sm-0">	            
+	         	<input type="text" placeholder="Add Description" className="form-control" value={this.state.description} name="description" onChange={this.handleChange} />
+	        </div>
+		      <button type="submit" className="btn btn-primary">Submit</button>
 	     	</form>
-	     	<BidList userId={this.props.userData.id} lastInsertedId={this.state.lastInsertedId} ref="bidInstance"/>
+        <BidList userId={this.state.userData.id} lastInsertedId={this.state.lastInsertedId} ref="bidInstance"/>
   		</div>
   		);
   }
