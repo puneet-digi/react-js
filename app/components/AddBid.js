@@ -36,20 +36,34 @@ export class AddBid extends React.Component {
         title: this.state.bid_title,
         user_id: this.props.userData.id
       }
-      $.ajax({
-        type: 'POST',
-        dataType: 'json',       
-        url: this.actionUrlPOST + "/add_bid.php",
-        data: data,
-      }).done(function(data) {
-      	self.setState({
-	        bid_link: "",
-	        description: "",
-	        bid_title: ""
-      	});
-      	self.setState({lastInsertedId: data.id});
-      	self.refs.bidInstance.setState({lastInsertedId: data.id});
-      });
+
+
+      fetch(this.actionUrlPOST + "/add_bid.php", {
+        method: "POST",
+        body: JSON.stringify({
+          bid_link: this.state.bid_link,
+          description: this.state.description,
+          title: this.state.bid_title,
+          user_id: this.props.userData.id
+        }),
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        }).then((response) => response.json())
+          .then((responseJson) => {
+              //data response is available in this responseJson variable
+              self.setState({
+                bid_link: "",
+                description: "",
+                bid_title: ""
+              });
+              self.setState({lastInsertedId: responseJson.id});
+              self.refs.bidInstance.setState({lastInsertedId: responseJson.id});
+            }).catch((error) => {
+                console.error(error);
+            }
+        );
   }
 
   render(){

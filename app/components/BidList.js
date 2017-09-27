@@ -37,49 +37,55 @@ export class BidList extends React.Component{
   }
 
   loadData(){
-    var data = {
-        user_id: this.state.userId
-      }
       var self = this;
-      // Submit form via jQuery/AJAX
-      $.ajax({
-        type: 'POST',
-        dataType: 'json',       
-        url: this.actionUrlPOST + "/bid_list.php",
-        data: data,
-      }).done(function(response) {
-        var dataElem = response.data;
-        self.setState({ratios: response.ratios});
-        var dataHtml = dataElem.map((obj) =>
-          <tr key={obj.id}>       
-             <td> 
-               <div  className=""><a href={obj.bid_link} target="_blank">{obj.bid_link}</a></div>
-             </td>
-             <td> 
-               <div  className="">{obj.title}</div>
-             </td>          
-             <td> 
-               <div  className="">{obj.description}</div>
-             </td>
-             <td> 
-               <div  className="">{obj.lead != null ? obj.lead : '--'}</div>
-             </td>
-             <td> 
-               <div  className="">{obj.conversion != null ? obj.conversion : '--'}</div>
-             </td>
-             <td> 
-               <div  className=" ">{obj.created_date}</div>
-             </td>
-          </tr>
-          );
-        self.setState({
-          dataHtml:dataHtml, 
-          requestSuccess: '1', 
-          total_count: response.total_count,
-          leadsCount: response.leadsCount,
-          conversionCount: response.conversionCount
-        });
-      });
+
+     fetch(this.actionUrlPOST + "/bid_list.php", {
+      method: "POST",
+      body: JSON.stringify({
+        user_id: this.state.userId
+      }),
+      headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      }).then((response) => response.json())
+        .then((responseJson) => {
+            //data response is available in this responseJson variable
+          var dataElem = responseJson.data;
+          self.setState({ratios: responseJson.ratios});
+          var dataHtml = dataElem.map((obj) =>
+            <tr key={obj.id}>       
+               <td> 
+                 <div  className=""><a href={obj.bid_link} target="_blank">{obj.bid_link}</a></div>
+               </td>
+               <td> 
+                 <div  className="">{obj.title}</div>
+               </td>          
+               <td> 
+                 <div  className="">{obj.description}</div>
+               </td>
+               <td> 
+                 <div  className="">{obj.lead != null ? obj.lead : '--'}</div>
+               </td>
+               <td> 
+                 <div  className="">{obj.conversion != null ? obj.conversion : '--'}</div>
+               </td>
+               <td> 
+                 <div  className=" ">{obj.created_date}</div>
+               </td>
+            </tr>
+            );
+          self.setState({
+            dataHtml:dataHtml, 
+            requestSuccess: '1', 
+            total_count: responseJson.total_count,
+            leadsCount: responseJson.leadsCount,
+            conversionCount: responseJson.conversionCount
+          });
+        }).catch((error) => {
+              console.error(error);
+        }
+      );
   }
 
   render(){

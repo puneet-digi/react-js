@@ -28,7 +28,7 @@
 		return ($one / $two) * 100;
 	}
 
-    $posted_data = $_REQUEST;
+    $posted_data = json_decode(file_get_contents('php://input'), true);
 
     $string = "SELECT * FROM bids where user_id= " . $posted_data['user_id'] . " ORDER BY `created_date` DESC";
 	$results = $mysqli->query($string);

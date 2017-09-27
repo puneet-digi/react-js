@@ -20,25 +20,30 @@ export class SignupForm extends React.Component {
   handleSubmit(e){
 	    var self = this;
       e.preventDefault();
-      var data = {
-        name: this.state.name,
-        email: this.state.email,
-        password: this.state.password,
-        gender: this.state.gender
-      };
-      // Submit form via jQuery/AJAX
-      $.ajax({
-        type: 'POST',
-        dataType: 'json',       
-        url: this.actionUrlPOST + "/user.php",
-        data: data,
-      }).done(function(data) {
-        if(data.error==1){
-          alert(data.message);
-        }else {
-          self.props.logIn(data.data);
-        }
-      })	  
+      
+      fetch(this.actionUrlPOST + "/user.php", {
+        method: "POST",
+        body: JSON.stringify({
+          email: this.state.email,
+          password: this.state.password
+        }),
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        }).then((response) => response.json())
+          .then((responseJson) => {
+              //data response is available in this responseJson variable
+              if(responseJson.error==1){
+                alert(responseJson.message);
+              }else {
+                self.props.logIn(responseJson.data);
+              }
+            }
+          ).catch((error) => {
+                console.error(error);
+              }
+          );
   }
 
   handleChange(event){
