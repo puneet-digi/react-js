@@ -4,6 +4,7 @@ import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios 
 import $ from 'jquery';
 import {BidList} from "./BidList";
 
+
 export class AddBid extends React.Component {
 
   constructor(props){
@@ -27,6 +28,10 @@ export class AddBid extends React.Component {
   	this.setState({[inputName]: event.target.value});
   }
 
+  componentDidMount(){
+
+  }
+
   handleSubmit(e){
       e.preventDefault();
       var self = this;
@@ -36,7 +41,6 @@ export class AddBid extends React.Component {
         title: this.state.bid_title,
         user_id: this.props.userData.id
       }
-
 
       fetch(this.actionUrlPOST + "/add_bid.php", {
         method: "POST",
@@ -83,7 +87,7 @@ export class AddBid extends React.Component {
 	        </div>
 		      <button type="submit" className="btn btn-primary">Submit</button>
 	     	</form>
-        <BidList userId={this.state.userData.id} lastInsertedId={this.state.lastInsertedId} ref="bidInstance"/>
+                <BidList userId={this.state.userData.id} lastInsertedId={this.state.lastInsertedId} ref="bidInstance"/>
   		</div>
   		);
   }
