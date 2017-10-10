@@ -1,7 +1,5 @@
 import React from 'react';
 import {render} from 'react-dom';
-
-
 import {Clock} from "./components/Clock";
 import {SignupForm} from "./components/SignupForm";
 import {AddBid} from "./components/AddBid";
@@ -47,8 +45,8 @@ class App extends React.Component {
   render(){
     if(this.state.isLogin === 'welcome') {
       return (
-        <div>
-          <div>
+        <div  >
+          <div className="form-main">
             <AddBid userData={this.state.user} logout={this.userLogout}/>
           </div>
         </div>
@@ -56,7 +54,7 @@ class App extends React.Component {
     } else{
       return (
         <div>
-          <div>
+          <div className="form-main">
             <SignupForm logIn={this.userLoggedIn}/>
           </div>
         </div>

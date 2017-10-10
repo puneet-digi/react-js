@@ -101,13 +101,13 @@ export class BidList extends React.Component{
       bid_to_conversion_percentage: this.state.ratios.bid_to_conversion_percentage
     };
     return (
-      <div className="container">
+      <div className="">
           <div className="justify-content-center">
             <hr></hr>
                 <Count {...props}/>
               <hr></hr>
           </div>
-          {this.state.requestSuccess === '1' ? <table className="table table-inverse">
+          {this.state.requestSuccess === '1' ? <table className="table table-striped">
             <thead>
               <tr>
                 <th>Bid Link</th>

@@ -1,6 +1,5 @@
 import React from "react";
 import { render } from "react-dom";
-import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios'
 import $ from 'jquery';
 
 export class SignupForm extends React.Component {
@@ -54,6 +53,7 @@ export class SignupForm extends React.Component {
   render(){
   	return (
   		<div className="container">
+        <div className="form-outer">
         <div className="justify-content-center">
           <h1>Login</h1>
           <hr></hr>
@@ -61,23 +61,24 @@ export class SignupForm extends React.Component {
     		<form onSubmit={this.handleSubmit}>
           <div className="form-group row">
             <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Email</label>
-    	      <div className="col-sm-5">
+    	      <div className="col-sm-10">
               <input type="email" className="form-control" value={this.state.email} name="email" onChange={this.handleChange} placeholder="Email" />
             </div>
           </div>
 
           <div className="form-group row">
             <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Password</label>
-            <div className="col-sm-5">
+            <div className="col-sm-10">
                 <input type="password" className="form-control" value={this.state.password} name="password" onChange={this.handleChange} placeholder="Password" />
             </div>
           </div>
           <div className="form-group row">
-            <div className="col-sm-10">
+            <div className="col-sm-12">
               <button className="btn btn-primary" type="submit">Login</button>
             </div>
           </div>
         </form>
+        </div>
 	    </div>
   		);
   }

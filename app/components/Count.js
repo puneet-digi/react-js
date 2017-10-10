@@ -1,6 +1,5 @@
 import React from "react";
 import { render } from "react-dom";
-import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios'
 import $ from 'jquery';
 import {Stats} from "./Stats";
 
@@ -21,20 +20,18 @@ export class Count extends React.Component{
 		};
 		return (
 			<div>
-	            <nav className="navbar navbar-default">
-	              <div className="container-fluid">
-	                <div className="navbar-header">
+	           
+	             
 	                  <ul className="nav navbar-nav">
 	                    <li className="list-group-item justify-content-between"><div>Bids <span className="badge">{this.props.bidsCount}</span></div></li>
 	                    <li className="list-group-item justify-content-between"><div>Leads <span className="badge">{this.props.leadsCount}</span></div></li>
 	                    <li className="list-group-item justify-content-between"><div>Conversions <span className="badge">{this.props.conversionCount}</span></div></li>
 	                  </ul>
-	                </div>
-	              </div>
-	              <div className="navbar navbar-default">
+	                
+	              <div className="">
 	              	<Stats {...props}/>
 	              </div>
-	            </nav>
+	          
 			</div>
 			);
 	}

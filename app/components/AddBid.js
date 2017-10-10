@@ -1,6 +1,5 @@
 import React from "react";
 import { render } from "react-dom";
-import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios'
 import $ from 'jquery';
 import {BidList} from "./BidList";
 
@@ -72,7 +71,9 @@ export class AddBid extends React.Component {
 
   render(){
   	return (
+
   		<div className="container">
+      <div className="dashboard-inner">
 			  <div className="justify-content-center">
 	        <h1 className="text-capitalize">Welcome {this.props.userData.first_name},
 					  <button type="submit" onClick={this.props.logout} className="btn btn-primary pull-right">Logout</button>
@@ -89,6 +90,7 @@ export class AddBid extends React.Component {
 	     	</form>
                 <BidList userId={this.state.userData.id} lastInsertedId={this.state.lastInsertedId} ref="bidInstance"/>
   		</div>
+      </div>
   		);
   }
 

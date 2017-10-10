@@ -1,6 +1,5 @@
 import React from "react";
 import { render } from "react-dom";
-import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios'
 import $ from 'jquery';
 
 export class Stats extends React.Component {
@@ -12,9 +11,9 @@ export class Stats extends React.Component {
 		return (
 			<div>
 				<div className="item  col-xs-12 col-lg-12">
-		            <div className="thumbnail ">
+		            <div className="thumbnail">
 		                <i><h3 className="group inner list-group-item-heading"><u>Statistics</u></h3></i>
-		                <div className="col-xs-3 pull-left" >
+		                <div className="col-xs-6 pull-left" >
 			                <p className="lead">Current Ratios</p>
 				            <div className="row col-xs-12 col-lg-12">
 	                            <p >Bid to Lead ratio | <b>{this.props.bid_to_lead}</b></p>
